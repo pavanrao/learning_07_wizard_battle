@@ -1,8 +1,7 @@
-# import actors
 import random
 import time
 
-from actors import Wizard, Creatures
+from actors import Wizard, Creature, SmallAnimal, Dragon
 
 
 def print_header():
@@ -14,11 +13,11 @@ def print_header():
 
 def game_loop():
     creatures = [
-        Creatures("Toad", 1),
-        Creatures("Tiger", 12),
-        Creatures("Bat", 3),
-        Creatures("Dragon", 50),
-        Creatures("Evil Wizard", 1000),
+        SmallAnimal("Toad", 1),
+        Creature("Tiger", 12),
+        SmallAnimal("Bat", 3),
+        Dragon("Dragon", 50, 30, True),
+        Wizard("Evil Wizard", 1000),
     ]
 
     hero = Wizard("Gandalf", 75)
@@ -26,8 +25,11 @@ def game_loop():
     while True:
 
         active_creature = random.choice(creatures)
-        print('A {} of level {} has appeared from a dark and foggy forest...'
-              .format(active_creature.name, active_creature.level))
+        print(
+            "A {} of level {} has appeared from a dark and foggy forest...".format(
+                active_creature.name, active_creature.level
+            )
+        )
 
         cmd = input("Do you want to [a]ttack, [r]unaway, [l]ook around or e[x]it?  ")
         if cmd == "a":
@@ -41,8 +43,7 @@ def game_loop():
         elif cmd == "r":
             print("The wizard has become unsure of his power and flees!!!")
         elif cmd == "l":
-            print("The wizard {} takes in the surroundings and sees:"
-                  .format(hero.name))
+            print("The wizard {} takes in the surroundings and sees:".format(hero.name))
             for creature in creatures:
                 print(" * A {} of level {}".format(creature.name, creature.level))
         elif cmd == "x":
@@ -50,6 +51,10 @@ def game_loop():
             break
         else:
             print("I dont understand that, please try again.")
+
+        if not creatures:
+            print("You defeated all the creatures!!")
+            break
 
 
 def main():
